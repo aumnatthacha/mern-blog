@@ -5,10 +5,13 @@ const mongoose = require("mongoose");
 const User = require("./models.js/User");
 const jwt = require("jsonwebtoken");
 
-
+//Environment Variables
 require("dotenv").config();
+
+//Express Setup
 const app = express();
 
+//Middleware Setup
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
 
@@ -17,7 +20,7 @@ app.use(express.json());
 const MONGODB_URL = process.env.MONGODB_URL;
 mongoose.connect(MONGODB_URL);
 
-
+//Home Route
 app.get("/", (req, res) => {
     res.send("<h1>This is a RESTful API FOR SE NPRU Blog</h1>")
 })

@@ -31,12 +31,8 @@ const Header = () => {
             <Link to={"/register"}>Register</Link>
           </>
         )}
-
-
-
       </nav>
     </header>
   )
 }
-
 export default Header

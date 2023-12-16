@@ -12,4 +12,4 @@ const PostSchema = new Schema({
 },
 );
 const PostModel = model("Post" , PostSchema);
-model.exports = PostModel;
+module.exports = PostModel;
