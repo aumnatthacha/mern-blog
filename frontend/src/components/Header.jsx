@@ -9,7 +9,7 @@ const Header = () => {
   const { setUserInfo, userInfo } = useContext(UserContext);
   const username = userInfo?.username;
   const logout = () => {
-    fetch(`${baseURL}/logout`,{
+    fetch(`${baseURL}/logout`, {
       credentials: "include",
       method: "POST",
     });
