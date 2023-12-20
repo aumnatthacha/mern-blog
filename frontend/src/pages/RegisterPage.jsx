@@ -23,7 +23,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <form className='block max-w-md p-6 mx-auto bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700' onSubmit={register}>
+    <form className='block max-w-md p-6 mx-auto bg-white border border-gray-200 rounded-lg shadow' onSubmit={register}>
       <div>
         <h1 className='text-center font-semibold text-xl'>Register</h1>
         <div>
@@ -40,8 +40,7 @@ const RegisterPage = () => {
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
+          className="rounded-md bg-green-950 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline">
           Register
         </button>
       </div>
