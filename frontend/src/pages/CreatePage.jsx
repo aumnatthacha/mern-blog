@@ -123,7 +123,7 @@ const CreatePage = () => {
   }
 
   return (
-    <form onSubmit={createPost}>
+    <form onSubmit={createPost} className="block text-sm font-medium leading-10 text-gray-900">
       <input
         type="text"
         name="title"
@@ -131,21 +131,21 @@ const CreatePage = () => {
         placeholder="title"
         onChange={(e) => setTitle(e.target.value)}
       />
-      <input
+      <input className="block text-sm font-medium leading-10 text-gray-900"
         type="text"
         name="summary"
         value={summary}
         placeholder="summary"
         onChange={(e) => setSummary(e.target.value)}
       />
-      <input
+      <input className="block text-sm font-medium leading-10 text-gray-900"
         type="file"
         name="file"
         id="file"
         onChange={(e) => setFiles(e.target.files)}
       />
-      <Editor value={content} onChange={setContent} />
-      <button> Create Post </button>
+      <Editor value={content} onChange={setContent} className="block text-sm font-medium leading-10 text-gray-900" />
+      <button className="rounded-md bg-green-950 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline"> Create Post </button>
     </form>
   );
 };
