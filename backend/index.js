@@ -2,9 +2,9 @@ const express = require("express")
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
-const User = require("./models.js/User");
+const User = require("./models/User");
 const jwt = require("jsonwebtoken");
-const Post = require("./models.js/Post");
+const Post = require("./models/Post");
 
 const multer = require("multer")
 const uploadMiddleware = multer({ dest: "uploads/" });
@@ -21,6 +21,8 @@ const app = express();
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(cookieParser());
+//set statics (public) folder
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 
 //Database Connect
@@ -69,7 +71,7 @@ app.post("/login", async (req, res) => {
     } else {
         res.status(400).json("wrong credentials")
     }
-});         
+});
 
 //logout
 app.post("/logout", (req, res) => {
@@ -97,6 +99,23 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
         });
         res.json(postDoc);
     });
+});
+
+//
+app.get("/post", async (req, res) => {
+    res.json(
+        await Post.find()
+        .populate("author", ["username"])
+        .sort({ createdAt: - 1 })
+        .limit(20)
+    );
+});
+
+//
+app.get("/post/:id", async (req, res)=>{
+    const {id} = req.params;
+    const postDoc = await Post.findById(id).populate("author",["username"]);
+    res.json(postDoc)
 });
 
 const PORT = process.env.PORT

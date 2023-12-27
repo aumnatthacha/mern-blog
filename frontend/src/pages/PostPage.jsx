@@ -1,18 +1,34 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+const baseURL = import.meta.env.VITE_BASE_URL;
+
+
 
 const PostPage = () => {
+  const [postInfo, setPostsInfo] = useState(null);
+  const [useInfo, setUserInfo] = useContext(UserContext);
+  const { id } = useParams();
+  useEffect(() => {
+    fetch(`${baseURL}/post/${id}`).then((response) => {
+      response.json().then((postInfo) => {
+        setPostsInfo(postInfo);
+      });
+    });
+  }, [id]);
+  if (!postInfo) return "";
+
   return (
     <div className='post-page'>
       <h1>
-        {' '}
-        12 ธุรกิจที่น่าสนใจ ในปี 2023 ลงทุนน้อย รายได้ดีชี้ช่องรวย!
       </h1>
       <time>
-        21 FEBRUARY 2023
+       
       </time>
       <div className='author'>
-        Natthacha
+     
       </div>
       <div className='image'>
         <img
@@ -22,11 +38,7 @@ const PostPage = () => {
       </div>
       <div >
         <p className='summary'>
-          เทรนด์คร่าว ๆ ของการทำธุรกิจ สำหรับใครที่ไม่รู้ว่าจะเริ่มต้นทำธุรกิจอะไรดี นี่คือไอเดียที่กำลังถูกจับตามอง
-          และเป็นธุรกิจที่มีความก้าวกระโดด โดยเฉพาะชาวคอนโดอนันดาที่กำลังมองหาธุรกิจใหม่ๆ มาลงทุนทำเงินเพื่อให้เกิดความร่ำรวยเร็วทันยุค
-          ซึ่งเราต้องบอกก่อนว่าธุรกิจด้านความงามนั้น ปัจจุบันมาแรงเป็นอันดับต้น ๆ เพราะมีการใช้เทคโนโลยีเข้าช่วย ทำให้ทุกความสวยที่ต้องการเป็นไปได้
-          และต่อมาคือสุขภาพ ที่ผู้คนเริ่มหันมาตระหนักในการดูแลสุขภาพของตัวเองกันมากขึ้น ตามด้วย e-commerce ที่เชื่อมโยงเข้าด้วยกันกับธุรกิจอาหารและเครื่องดื่มแนวสุขภาพได้
-          นอกจากนี้ยังมีธุรกิจที่น่าสนใจอื่น ๆ อีกมากมาย ที่กำลังเติบโต ชวนให้นักลงทุนทุกคนได้ไปลองทำความรู้จักกันให้มากขึ้น
+          
         </p>
       </div>
     </div>

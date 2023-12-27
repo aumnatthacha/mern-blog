@@ -1,47 +1,34 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { format } from "date-fns";
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 
-const Post = () => {
+
+const Post = ({_id, cover, title, author, createdAt, summary }) => {
+    console.log(cover, author);
     return (
-        <div className='post'>
-            <div className='image'>
-                <Link>
-                    <img
-                        src='https://www.ananda.co.th/blog/thegenc/wp-content/uploads/2023/02/financial-broker-explaning-business-data-his-client.jpg'
-                        alt=''
-                    />
+        <div className="post">
+            <div className="image">
+                <Link to={`/post/${_id}`}>
+                    <img src={`${baseURL}/${cover}`} alt="" />
                 </Link>
             </div>
-            <div className='texts'>
-                <Link>
-                    <h2>
-                        12 ธุรกิจที่น่าสนใจ ในปี 2023 ลงทุนน้อย รายได้ดีชี้ช่องรวย!
-                    </h2>
+            <div className="texts">
+                <Link to={`/post/${_id}`}>
+                    <h2>{title}</h2>
                 </Link>
-                <p className='info' >
-                    <a href='' className='author'>
-                        Natthacha
-                    </a>
-                    <a href='/post/1' className='author'>
-                        Post 1
-                    </a>
-
-                    <br></br>
-                    <time>21 FEBRUARY 2023</time>
+                <p className="info">
+                    <a className="author"> {author.username} </a>
+                    <time> {format(new Date(createdAt), "dd MM yyyy HH:MM")} </time>
                 </p>
-                <p className='summary'>
-                    เทรนด์คร่าว ๆ ของการทำธุรกิจ สำหรับใครที่ไม่รู้ว่าจะเริ่มต้นทำธุรกิจอะไรดี นี่คือไอเดียที่กำลังถูกจับตามอง
-                    และเป็นธุรกิจที่มีความก้าวกระโดด โดยเฉพาะชาวคอนโดอนันดาที่กำลังมองหาธุรกิจใหม่ๆ มาลงทุนทำเงินเพื่อให้เกิดความร่ำรวยเร็วทันยุค
-                    ซึ่งเราต้องบอกก่อนว่าธุรกิจด้านความงามนั้น ปัจจุบันมาแรงเป็นอันดับต้น ๆ เพราะมีการใช้เทคโนโลยีเข้าช่วย ทำให้ทุกความสวยที่ต้องการเป็นไปได้
-                    และต่อมาคือสุขภาพ ที่ผู้คนเริ่มหันมาตระหนักในการดูแลสุขภาพของตัวเองกันมากขึ้น ตามด้วย e-commerce ที่เชื่อมโยงเข้าด้วยกันกับธุรกิจอาหารและเครื่องดื่มแนวสุขภาพได้
-                    นอกจากนี้ยังมีธุรกิจที่น่าสนใจอื่น ๆ อีกมากมาย ที่กำลังเติบโต ชวนให้นักลงทุนทุกคนได้ไปลองทำความรู้จักกันให้มากขึ้น
-
-                </p>
+                <p className="summary">{summary}</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Post
+export default Post;
