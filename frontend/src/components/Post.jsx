@@ -9,7 +9,7 @@ const baseURL = import.meta.env.VITE_BASE_URL;
 
 
 const Post = ({_id, cover, title, author, createdAt, summary }) => {
-    console.log(cover, author);
+    // console.log(cover, author);
     return (
         <div className="post">
             <div className="image">
