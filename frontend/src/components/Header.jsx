@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -19,26 +20,35 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-green-950 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        
-        <Link to="/" className="text-white text-lg font-bold">SE NPRU BLOG</Link>
-
-        <nav>
-          {username ? (
-            <>
-              <Link to="/create" className="text-white mx-2">Create</Link>
-              <a onClick={logout} className="text-white mx-2">Logout ({username})</a>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="text-white mx-2">Login</Link>
-              <Link to="/register" className="text-white mx-2">Register</Link>
-            </>
-          )}
-        </nav>
-      </div>
-    </header>
+    <>
+      <nav class="bg-black">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            {/* <img src="" class="h-8" alt="" /> */}
+            <span class="self-center text-2xl font-semibold whitespace-nowrap text-yellow-50">SE NPRU BLOG</span>
+          </a>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            {username ? (
+              <>
+                <a href="/create" class="text-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Create
+                </a>
+                <button type="button" onClick={logout} class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Logout({username})
+                </button>
+              </>
+              /* <>
+                <a href="/create" className="text-sm text-gray-500 dark:text-white hover:underline">Create</a>
+               
+              </> */
+            ) : (
+              <>
+                <a href="/login" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Sign in
+                </a>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 

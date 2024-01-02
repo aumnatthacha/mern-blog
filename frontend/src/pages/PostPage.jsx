@@ -9,7 +9,7 @@ const baseURL = import.meta.env.VITE_BASE_URL;
 
 const PostPage = () => {
   const [postInfo, setPostInfo] = useState(null);
-  const {userInfo} = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   const { id } = useParams();
   useEffect(() => {
     fetch(`${baseURL}/post/${id}`).then((response) => {
