@@ -31,7 +31,7 @@ const CreatePage = () => {
   }
 
   return (
-    <form onSubmit={createPost} className="max-w-xl mx-auto block bg-white border border-gray-200 rounded-lg shadow mt-20 p-8 text-slate-950">
+    <form onSubmit={createPost} className="max-w-xl mx-auto block bg-white border border-gray-200 rounded-lg shadow mt-8 p-4 sm:p-6 lg:p-8 text-slate-950">
       <div className="mb-5">
         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Title
@@ -60,7 +60,6 @@ const CreatePage = () => {
           required
         />
       </div>
-
       <div className="mb-5">
         <label htmlFor="user_avatar" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Upload profile picture

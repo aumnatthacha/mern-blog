@@ -2,7 +2,6 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
@@ -55,7 +54,8 @@ export const LoginPage = () => {
         </label>
         <input
           type="text"
-          name="username"
+          id="username"
+          value={username}
           className="block w-full px-4 py-2.5 text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-lime-300 dark:text-white dark:border-gray-600"
           placeholder="username"
           onChange={(e) => setUsername(e.target.value)}
@@ -70,7 +70,8 @@ export const LoginPage = () => {
         </label>
         <input
           type="password"
-          name="password"
+          id="password"
+          value={password}
           className="block w-full px-4 py-2.5 text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-lime-300 dark:text-white dark:border-gray-600 "
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}

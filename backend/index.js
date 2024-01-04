@@ -101,6 +101,66 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
     });
 });
 
+
+// Delete Post
+app.delete("/posts/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      // Delete post by ID
+      const deletedPost = await Post.findByIdAndDelete(id);
+  
+      if (deletedPost) {
+        // If deletion is successful
+        res.json({ message: "Post deleted successfully", deletedPost });
+      } else {
+        // If the specified ID is not found
+        res.status(404).json({ message: "Post not found" });
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+      res.status(500).json("Internal Server Error");
+    }
+  });
+  
+  //Edit
+  app.put("/posts/:id", uploadMiddleware.single("file"), async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const { title, summary, content } = req.body;
+      let updateData = { title, summary, content };
+  
+      if (req.file) {
+        const { originalname, path } = req.file;
+        const parts = originalname.split(".");
+        const ext = parts[parts.length - 1];
+        const newPath = path + "." + ext;
+  
+        await fs.promises.rename(path, newPath);
+        updateData = { ...updateData, cover: newPath };
+      }
+  
+      const existingPost = await Post.findById(id);
+      const existingCoverPath = existingPost ? existingPost.cover : '';
+  
+      // เช็คว่าถ้าไม่มีรูปใหม่ถูกส่งมา ให้ใช้รูปเดิมจากฐานข้อมูล
+      const cover = req.file ? updateData.cover : existingCoverPath;
+  
+      const updatedPost = await Post.findByIdAndUpdate(id, { ...updateData, cover }, {
+        new: true,
+      });
+  
+      if (updatedPost) {
+        res.json(updatedPost);
+      } else {
+        res.status(404).json({ message: "Post not found" });
+      }
+    } catch (error) {
+      console.error("Error updating post:", error.message);
+      res.status(500).json("Internal Server Error");
+    }
+  });
+
 //
 app.get("/post", async (req, res) => {
     res.json(

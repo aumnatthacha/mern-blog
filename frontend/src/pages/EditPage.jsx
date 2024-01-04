@@ -1,19 +1,141 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import Editor from '../components/Editor'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Editor from '../components/Editor';
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const EditPage = () => {
-  return (
-    
-      <form>
-        <input type='text' name='title' placeholder='title' />
-        <input type='text' name='title' placeholder='summary' />
-        <input type='file' name='file' id='file' />
-        <Editor/>
-        <button>Edit</button>
-      </form>
-    
-  )
-}
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-export default EditPage
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState('');
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`${baseURL}/post/${id}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setTitle(data.title);
+        setSummary(data.summary);
+        setContent(data.content);
+      } catch (error) {
+        console.error('Error fetching post:', error.message);
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  const updatePost = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.set('title', title);
+    data.set('summary', summary);
+    data.set('content', content);
+    data.append('file', file[0]);
+
+    const res = await fetch(`${baseURL}/posts/${id}`, {
+      method: 'PUT',
+      body: data,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    if (res.ok) {
+      navigate('/');
+    }
+  };
+
+  return (
+    <form
+      onSubmit={updatePost}
+      className="max-w-xl mx-auto block bg-white border border-gray-200 rounded-lg shadow mt-8 p-4 sm:p-6 lg:p-8 text-slate-950"
+    >
+      {/* Title Input */}
+      <div className="mb-5">
+        <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Title
+        </label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="shadow-sm mb-6 bg-gray-50 border border-gray-300
+          text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+          focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+          dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        />
+      </div>
+
+      {/* Summary Input */}
+      <div className="mb-5">
+        <label htmlFor="summary" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Summary
+        </label>
+        <input
+          type="text"
+          name="summary"
+          placeholder="Summary"
+          value={summary}
+          onChange={(e) => setSummary(e.target.value)}
+          className="shadow-sm mb-6 bg-gray-50 border border-gray-300
+            text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+
+        />
+      </div>
+
+      {/* File Input */}
+      <div className="mb-5">
+        <label htmlFor="file" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Upload profile picture
+        </label>
+        <input
+          type="file"
+          name="file"
+          id="file"
+          onChange={(e) => setFile(e.target.files)}
+          className="shadow-sm mb-6 bg-gray-50 border border-gray-300
+            text-gray-900 text-sm rounded-lg focus:ring-blue-500
+            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+            dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+
+        />
+      </div>
+
+      {/* Editor Component */}
+      <Editor
+        value={content}
+        onChange={setContent}
+        className="mb-4 block text-sm font-medium leading-10 text-gray-900"
+      />
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full mt-3 text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80  font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
+      >
+        Edit Post
+      </button>
+    </form>
+  );
+};
+
+export default EditPage;

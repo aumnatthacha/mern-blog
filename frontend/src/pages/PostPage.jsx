@@ -5,12 +5,17 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 const PostPage = () => {
+  const navigate = useNavigate();
   const [postInfo, setPostInfo] = useState(null);
   const { userInfo } = useContext(UserContext);
   const { id } = useParams();
+
+
   useEffect(() => {
     fetch(`${baseURL}/post/${id}`).then((response) => {
       response.json().then((postInfo) => {
@@ -18,24 +23,70 @@ const PostPage = () => {
       });
     });
   }, [id]);
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${baseURL}/posts/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        console.log("Post deleted successfully!");
+        navigate("/");
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+    }
+  };
+  const deleteConfirmation = () => {
+    Swal.fire({
+      title: 'Are you sure you want to delete this post?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      icon: 'warning', // เพิ่มไอคอนเตือนเมื่อลบ
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDelete();
+      } else {
+        Swal.fire({
+          title: 'Success!',
+          text: 'The post was not deleted.',
+          
+        });
+      }
+    });
+  };
+  
+
   if (!postInfo) return "";
-  console.log(userInfo);
-  console.log(postInfo.author._id);
+
   return (
-    <div className="post-page">
-      <h1>{postInfo.title}</h1>
-      <time>{format(new Date(postInfo.createdAt), "dd MMMM yyyy HH:MM")}</time>
-      <div className="author"> @ by {postInfo.author.username} </div>
+    <div className="post-page max-w-2xl mx-auto my-8 p-4 bg-white rounded shadow">
+      <h1 className="text-3xl font-bold mb-4">{postInfo.title}</h1>
+      <time className="text-gray-600">
+        {format(new Date(postInfo.createdAt), "dd MMMM yyyy HH:MM")}
+      </time>
+      <div className="text-gray-700 mt-2">
+        @ by {postInfo.author.username}
+      </div>
+
       {userInfo?.id === postInfo.author._id && (
-        <div className="edit-row">
-          <Link className="edit-btn" to={'/edit/`${postInfo._id}`'}>
+        <div className="edit-row mt-4">
+          <Link
+            className="edit-btn flex items-center text-blue-500"
+            to={`/edit/${postInfo._id}`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="w-6 h-6 mr-2"
             >
               <path
                 strokeLinecap="round"
@@ -45,15 +96,40 @@ const PostPage = () => {
             </svg>
             Edit This post
           </Link>
+          <Link
+            className="delete-btn flex items-center text-blue-500"
+            to="#"
+            onClick={deleteConfirmation}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            Delete This post
+          </Link>
         </div>
       )}
-      <div className="image">
-        <Link>
-          <img src={`${baseURL}/${postInfo.cover}`} alt="" />
+      <div className="image mt-6">
+        <Link to="/">
+          <img
+            src={`${baseURL}/${postInfo.cover}`}
+            alt={postInfo.title}
+            className="rounded"
+          />
         </Link>
       </div>
-      <div className="content" dangerouslySetInnerHTML={{ __html: postInfo.content }}></div>
-    </div >
+
+      <div
+        className="content mt-6 text-gray-800"
+        dangerouslySetInnerHTML={{ __html: postInfo.content }}
+      ></div>
+    </div>
   );
 };
 
