@@ -41,6 +41,8 @@ const PostPage = () => {
       console.error("Error deleting post:", error.message);
     }
   };
+
+  // ฟังก์ชันนี้ใช้ในการแสดงกล่องข้อความยืนยันการลบโพสต์
   const deleteConfirmation = () => {
     Swal.fire({
       title: 'Are you sure you want to delete this post?',
@@ -50,17 +52,20 @@ const PostPage = () => {
       icon: 'warning', // เพิ่มไอคอนเตือนเมื่อลบ
     }).then((result) => {
       if (result.isConfirmed) {
+        // ถ้าผู้ใช้กดตกลงในกล่องยืนยัน
         handleDelete();
       } else {
+        // ถ้าผู้ใช้กดยกเลิก
         Swal.fire({
-          title: 'Success!',
-          text: 'The post was not deleted.',
-          
+          title: 'สำเร็จ!',
+          text: 'โพสต์ไม่ได้ถูกลบ',
+          icon: 'success',
+
         });
       }
     });
   };
-  
+
 
   if (!postInfo) return "";
 

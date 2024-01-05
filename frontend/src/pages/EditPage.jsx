@@ -18,11 +18,14 @@ const EditPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        // ส่ง HTTP GET request ไปยัง API เพื่อดึงข้อมูลโพสต์ตาม ID
         const response = await fetch(`${baseURL}/post/${id}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        // แปลง response เป็น JSON
         const data = await response.json();
+        // อัปเดต state ด้วยข้อมูลที่ได้จาก API
         setTitle(data.title);
         setSummary(data.summary);
         setContent(data.content);
@@ -35,20 +38,23 @@ const EditPage = () => {
   }, [id]);
 
   const updatePost = async (e) => {
+    // ป้องกันการโหลดหน้าใหม่เมื่อส่งฟอร์ม
     e.preventDefault();
 
+    // สร้าง FormData เพื่อเก็บข้อมูลที่จะส่งไปยัง API
     const data = new FormData();
     data.set('title', title);
     data.set('summary', summary);
     data.set('content', content);
-    data.append('file', file[0]);
+    data.append('file', file[0]); // แนบไฟล์ (cover image)
 
+    // ส่ง HTTP PUT request ไปยัง API endpoint สำหรับการอัปเดตโพสต์
     const res = await fetch(`${baseURL}/posts/${id}`, {
       method: 'PUT',
-      body: data,
-      credentials: 'include',
+      body: data, // ใช้ FormData เป็น body ของ request
+      credentials: 'include', // รวมข้อมูลการรับรองตัวตนใน request
       headers: {
-        Accept: 'application/json',
+        Accept: 'application/json', // ระบุประเภทข้อมูลที่ต้องการใน response
       },
     });
 
@@ -56,6 +62,7 @@ const EditPage = () => {
       navigate('/');
     }
   };
+
 
   return (
     <form
