@@ -15,6 +15,7 @@ const EditPage = () => {
   const [content, setContent] = useState('');
   const [file, setFile] = useState('');
 
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -33,7 +34,6 @@ const EditPage = () => {
         console.error('Error fetching post:', error.message);
       }
     };
-
     fetchPost();
   }, [id]);
 
@@ -57,12 +57,18 @@ const EditPage = () => {
         Accept: 'application/json', // ระบุประเภทข้อมูลที่ต้องการใน response
       },
     });
-
     if (res.ok) {
       navigate('/');
     }
   };
 
+  const cancelEdit = () => {
+    const confirmCancel = window.confirm('Are you sure you want to cancel editing? Your changes will not be saved.');
+
+    if (confirmCancel) {
+      navigate('/');
+    }
+  };
 
   return (
     <form
@@ -137,9 +143,16 @@ const EditPage = () => {
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full mt-3 text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80  font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
+        className="w-full mt-3 text-yellow-50 hover:bg-teal-800 bg-teal-600 focus:ring-4 focus:outline-none shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
       >
         Edit Post
+      </button>
+      <button
+        type="button"
+        onClick={cancelEdit}
+        className="w-full text-yellow-50 hover:bg-gray-800 bg-gray-400 focus:ring-4 focus:outline-none shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      >
+        Cancel Edit
       </button>
     </form>
   );

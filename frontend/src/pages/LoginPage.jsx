@@ -43,7 +43,7 @@ export const LoginPage = () => {
       <div className='flex items-center justify-center' >
         <h2 className="text-2xl font-semibold mb-5">
           <span className="text-gray-900 dark:text-white ">Sign in</span>
-          <span className="text-lime-700"> SE NPRU BLOG</span>
+          <span className="text-teal-600"> SE BLOG</span>
         </h2>
       </div>
 
@@ -56,7 +56,7 @@ export const LoginPage = () => {
           type="text"
           id="username"
           value={username}
-          className="block w-full px-4 py-2.5 text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-lime-300 dark:text-white dark:border-gray-600"
+          className="block w-full px-4 py-2.5 text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-teal-600 dark:text-white dark:border-gray-600"
           placeholder="username"
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -72,7 +72,7 @@ export const LoginPage = () => {
           type="password"
           id="password"
           value={password}
-          className="block w-full px-4 py-2.5 text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-lime-300 dark:text-white dark:border-gray-600 "
+          className="block w-full px-4 py-2.5 text-sm text-gray-900 bg-transparent border-b-2 border-gray-300 focus:outline-none focus:border-teal-600 dark:text-white dark:border-gray-600 "
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -80,12 +80,12 @@ export const LoginPage = () => {
       </div>
       <button
         type="submit"
-        className="w-full text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80  font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
+        className="w-full text-yellow-50 hover:bg-teal-800 bg-teal-600 focus:ring-4 focus:outline-none shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
       >
         Login to your account
       </button>
       <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-        Not registered? <a href="/register" className="text-lime-700 hover:underline dark:text-black">Create account</a>
+        Not registered? <a href="/register" className="text-teal-600 hover:underline dark:text-black">Create account</a>
       </div>
     </form>
   )

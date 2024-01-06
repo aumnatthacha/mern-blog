@@ -57,10 +57,7 @@ const PostPage = () => {
       } else {
         // ถ้าผู้ใช้กดยกเลิก
         Swal.fire({
-          title: 'สำเร็จ!',
-          text: 'โพสต์ไม่ได้ถูกลบ',
-          icon: 'success',
-
+          title: 'The post was not deleted.',
         });
       }
     });
@@ -70,8 +67,26 @@ const PostPage = () => {
   if (!postInfo) return "";
 
   return (
-    <div className="post-page max-w-2xl mx-auto my-8 p-4 bg-white rounded shadow">
-      <h1 className="text-3xl font-bold mb-4">{postInfo.title}</h1>
+    <div className="post-page max-w-2xl mx-auto my-8 p-4 rounded shadow">
+      <h1 className="text-3xl font-bold mb-4 text-black text-center">{postInfo.title}</h1>
+
+      <div className="image mt-6">
+        <Link to="/">
+          <img
+            src={`${baseURL}/${postInfo.cover}`}
+            alt={postInfo.title}
+            className="rounded"
+          />
+        </Link>
+      </div>
+
+      <div
+        className="content mt-6 text-gray-800"
+        dangerouslySetInnerHTML={{ __html: postInfo.content }}
+      >
+      </div>
+
+     
       <time className="text-gray-600">
         {format(new Date(postInfo.createdAt), "dd MMMM yyyy HH:MM")}
       </time>
@@ -120,20 +135,6 @@ const PostPage = () => {
           </Link>
         </div>
       )}
-      <div className="image mt-6">
-        <Link to="/">
-          <img
-            src={`${baseURL}/${postInfo.cover}`}
-            alt={postInfo.title}
-            className="rounded"
-          />
-        </Link>
-      </div>
-
-      <div
-        className="content mt-6 text-gray-800"
-        dangerouslySetInnerHTML={{ __html: postInfo.content }}
-      ></div>
     </div>
   );
 };

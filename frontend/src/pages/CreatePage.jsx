@@ -16,6 +16,7 @@ const CreatePage = () => {
     data.set("summary", summary);
     data.set("content", content);
     data.set("file", files[0]);
+
     e.preventDefault();
     const response = await fetch(`${baseURL}/post`, {
       method: "POST",
@@ -26,6 +27,10 @@ const CreatePage = () => {
       setRedirect(true);
     }
   };
+  const cancelCreate = () => {
+    setRedirect(true);
+  };
+
   if (redirect) {
     return <Navigate to={"/"} />;
   }
@@ -80,9 +85,16 @@ const CreatePage = () => {
       </div>
       <button
         type="submit"
-        className="w-full text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80  font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
+        className="w-full text-yellow-50 hover:bg-teal-800 bg-teal-600 focus:ring-4 focus:outline-none shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4"
       >
         Create Post
+      </button>
+      <button
+        type="button"
+        onClick={cancelCreate}
+        className="w-full text-yellow-50 hover:bg-gray-800 bg-gray-400 focus:ring-4 focus:outline-none shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      >
+        Cancel
       </button>
     </form>
 

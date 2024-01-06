@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
@@ -12,36 +14,29 @@ const Post = ({ _id, cover, title, author, createdAt, summary }) => {
 
   return (
     <>
-      <div className="flex items-center justify-center mt-10">
-        <div className={`max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 post`}>
-          <Link to={`/post/${_id}`}>
-            <img className="rounded-t-lg" src={`${baseURL}/${cover}`} alt="" />
-          </Link>
-          <div className="p-5">
-            <Link to={`/post/${_id}`} className="block mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white hover:underline">
+      <div className="flex mt-6 items-center justify-center">
+        <div className="relative flex w-full max-w-[48rem] flex-row rounded-xl text-gray-700 shadow-md">
+          <div className="relative m-0 w-2/6 shrink-0 overflow-hidden rounded-xl rounded-r-none  text-gray-700">
+            <Link to={`/post/${_id}`}>
+              <img
+                src={`${baseURL}/${cover}`}
+                alt="image"
+                className="h-full w-full object-cover"
+              />
+            </Link>
+          </div>
+          <div className="p-6">
+            <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
               {title}
-            </Link>
-            <p className="mb-3 text-gray-700 dark:text-gray-400">
-              {summary}
+            </h4>
+            <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
+              {summary} <br></br> {author.username} <br></br> {formattedDate}
             </p>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {author.username}
-            </p>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {formattedDate}
-            </p>
-            <Link
-              to={`/post/${_id}`}
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80"
-            >
-              Read more
-              <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-              </svg>
-            </Link>
           </div>
         </div>
       </div>
+
+
     </>
   );
 };
